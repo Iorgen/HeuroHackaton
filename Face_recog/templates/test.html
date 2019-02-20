@@ -1,0 +1,10 @@
+
+<div class="card" style="width: 100%;">
+  <input type="hidden" id = "test_id" value="{{ question.id }}">
+  <div class="card-body">
+    <h5 class="card-title">Вопрос:{{ question.id }}</h5>
+    <p class="card-text" id = "question">{{ question.question.split(' ', 1)[1] }}</p>
+    <p class="card-text">Эмоциональная окраска вопроса: {{ question.sentiment_id.sentiment_name }}</p>
+
+  </div>
+</div>

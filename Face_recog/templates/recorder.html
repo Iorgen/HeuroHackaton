@@ -1,0 +1,64 @@
+<html>
+
+<head>
+  <title>БРЛ</title>
+  <link rel="stylesheet" type="text/css" href="/static/style.css">
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/sound_block.css">
+</head>
+
+<body>
+  <input type="hidden" id="patient_id" value="{{patient.id}}">
+  <nav class="navbar navbar-light bg-light justify-content-between">
+    <a class="navbar-brand">Navbar</a>
+    <form class="form-inline">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class=" col-md-6">
+        <h1>
+          Анализ Эмоций
+        </h1>
+        <img id="bg" src="{{ url_for('video_feed') }}">
+      </div>
+      <div class="col-md-6">
+        <div class="container">
+          <div class="col-md-12">
+            <h1> Пациент {{ patient.name }} <b>{{ patient.surname }}</b></h1>
+          </div>
+          <div class="col-md-12">
+            <h1>Запись Аудио</h1>
+            <div id="controls">
+              <button id="recordButton" class = "btn btn-success">Record</button>
+              <button id="pauseButton" class = "btn btn-warning" disabled>Pause</button>
+              <button id="stopButton"  class = "btn btn-danger" disabled>Stop</button>
+            </div>
+            <div id="formats">Format: start recording to see sample rate</div>
+            <h3>Записанные файлы</h3>
+            <ol id="recordingsList"></ol>
+          </div>
+          <div class="col-md-12">
+            <div id="test__contents">
+              
+            </div>
+          </div>
+          <div class="col-md-12" style = "margin: 10px 0px 10px 0px;">
+            <a class="btn btn-outline-primary" onclick="submitTestLog();" role="button">
+              <p> Следующий тест</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+<script src="/static/sound_js/app.js"></script>
+<script src="/static/main.js"></script>
+
+</html>
