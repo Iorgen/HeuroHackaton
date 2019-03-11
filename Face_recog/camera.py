@@ -10,10 +10,21 @@ from utils.inference import draw_bounding_box
 from utils.inference import apply_offsets
 from utils.inference import load_detection_model
 from utils.preprocessor import preprocess_input
+from database import *
+# import datetime
+from datetime import datetime, time
+
+
+def date_diff_in_Seconds(dt2, dt1):
+  timedelta = dt2 - dt1
+  return timedelta.days * 24 * 3600 + timedelta.seconds
 
 
 class VideoCamera(object):
-    def __init__(self):
+    def __init__(self, patient):
+        self.log_date = datetime.now()
+        self.current_patient = patient
+        self.current_emotion = Emotion.select().where(Emotion.id == 6).get()
         self.video = cv2.VideoCapture(0)
         self.emotion_model_path = './models/emotion_model.hdf5'
         self.emotion_labels = get_labels('fer2013')
@@ -63,6 +74,16 @@ class VideoCamera(object):
             emotion_prediction = self.emotion_classifier.predict(gray_face)
             emotion_probability = np.max(emotion_prediction)
             emotion_label_arg = np.argmax(emotion_prediction)
+            print(date_diff_in_Seconds(datetime.now(), self.log_date))
+            if date_diff_in_Seconds(datetime.now(), self.log_date) > 3:
+                self.log_date = datetime.now()
+                print("emotion log done")
+                self.current_emotion = Emotion.select().where(Emotion.id == emotion_label_arg).get()
+                emotionlog = ChangeLogRecords(patient_id=self.current_patient,
+                                                current_emotion_id=self.current_emotion,
+                                              change_date=datetime.now())
+                emotionlog.save()
+
             emotion_text = self.emotion_labels[emotion_label_arg]
             self.emotion_window.append(emotion_text)
 

@@ -34,3 +34,21 @@ function AskQuestion(){
     utterThis.voice = voices[0];
     synth.speak(utterThis);
 }
+
+
+function FinishTestAndGetGraphic(){
+    document.getElementById('loader').style.display = "block";
+    var patient_id = document.getElementById('patient_id').value;
+    var url = 'patient_change_plots';
+    var xhr = new XMLHttpRequest()
+    url = url + "?patient_id=" + patient_id;
+    xhr.open('GET', url, true)  
+    xhr.send();
+    xhr.onloadend = function () {
+        document.getElementById('loader').style.display = "none";
+        var graphic = document.getElementById('graphic');
+        graphic.innerHTML = xhr.responseText;
+        // draw a plot 
+    };
+
+}

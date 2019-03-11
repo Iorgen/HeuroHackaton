@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>БРЛ</title>
+  <title>Depress.net</title>
   <link rel="stylesheet" type="text/css" href="/static/style.css">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -11,7 +11,7 @@
 
 <body>
   <nav class="navbar navbar-light bg-light justify-content-between">
-    <a class="navbar-brand">Navbar</a>
+    <a class="navbar-brand">Depress.net</a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -20,15 +20,15 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-        <form>
+        <form action="/add_patient" method="post">
           <div class="form-group">
-            <label for="exampleInputEmail1">Имя</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Имя пациента">
+            <label >Имя</label>
+            <input type="text" class="form-control" name = "name" placeholder="Имя пациента">
             <small id="emailHelp" class="form-text text-muted"></small>
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Фамилия пациента</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Фамилия">
+            <label >Фамилия пациента</label>
+            <input type="text" class="form-control" name = "surname" placeholder="Фамилия">
           </div>
           <button type="submit" class="btn btn-primary">Добавить пациента</button>
         </form>
@@ -37,8 +37,8 @@
         Список текущих пациентов
         {% for patient in patients %}
         <div>
-          <a class="btn btn-outline-primary" href="/patient_analysis?patient_id={{patient.id}}" role="button">
-            <p>{{ patient.name }} says: <b>{{ patient.surname }}</b></p>
+          <a class="btn btn-outline-primary" href="/patient_analysis?patient_id={{patient.id}}" role="button" style="width: 350px; margin: 10px 0px 10px 0px;">
+            <p>{{ patient.name }} <b>{{ patient.surname }}</b></p>
           </a>
         </div>
         {% endfor %}

@@ -24,13 +24,25 @@ def gen(camera):
 
 
 # --------------------- patient methods ------------------------ #
+# API отображающий видео транляцию с камеры - READY
+@app.route('/video_feed')
+def video_feed():
+    patient_id = request.args.get('patient_id', default=1, type=int)
+    patient = Patient.select().where(Patient.id == patient_id).get()
+    return Response(gen(VideoCamera(patient)),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
 # API добавляющий пациента  - READY
-@app.route('/add_patient')
-def add_patient(name, surname):
+@app.route('/add_patient', methods = ['POST', 'GET'])
+def add_patient():
+    name = request.form.get('name', default=1, type=str)
+    surname = request.form.get('surname', default=1, type=str)
     patient = Patient(name=name,
                       surname=surname)
     patient.save()
-    return render_template('recorder.html')
+    patients = Patient.select()
+    return render_template('index.html', patients=patients)
 
 
 # Метод получения результатов анализа
@@ -40,11 +52,12 @@ def get_analysis_results():
     return render_template('test.html')
 
 
-#  получения графика изменений настроения пациента вместе с ответами пациента
-# @app.route('/patient_change_plot' ,  methods = ['POST'])
-# def patient_change_plot(patient_id):
-#     # TODO return JSON with info and graphic image
-#     return render_template('recorder.html')
+# получения графика изменений настроения пациента вместе с ответами пациента
+@app.route('/patient_change_plot' ,  methods = ['POST'])
+def patient_change_plot():
+    patient_id = request.args.get('patient_id', default=1, type=int)
+    #  TODO template with img and url
+    return render_template('recorder.html')
 
 
 # --------------------------------------------- #
@@ -61,13 +74,6 @@ def patient_analysis():
 def index():
     patients = Patient.select()
     return render_template('index.html', patients=patients)
-
-
-# API отображающий видео транляцию с камеры - READY
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen(VideoCamera()),
-                    mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 # ------------------ test methods  -------------------------- #

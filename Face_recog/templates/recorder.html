@@ -1,7 +1,7 @@
 <html>
 
 <head>
-  <title>БРЛ</title>
+  <title>Depress.net</title>
   <link rel="stylesheet" type="text/css" href="/static/style.css">
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <script href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
@@ -10,9 +10,10 @@
 </head>
 
 <body>
+  <div id="loader" style = "display: none"></div>
   <input type="hidden" id="patient_id" value="{{patient.id}}">
   <nav class="navbar navbar-light bg-light justify-content-between">
-    <a class="navbar-brand">Navbar</a>
+    <a class="navbar-brand">Depress.net</a>
     <form class="form-inline">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -24,7 +25,7 @@
         <h1>
           Анализ Эмоций
         </h1>
-        <img id="bg" src="{{ url_for('video_feed') }}">
+        <img id="bg" src="{{url_for('video_feed') + '?patient_id=' + '2'}}">
       </div>
       <div class="col-md-6">
         <div class="container">
@@ -51,7 +52,15 @@
             <a class="btn btn-outline-primary" onclick="submitTestLog();" role="button">
               <p> Следующий тест</p>
             </a>
+             <a class="btn btn-outline-danger" onclick="FinishTestAndGetGraphic();" role="button" style = "width: 400px;">
+              <p> Закончить тест и показать результаты </p>
+            </a>
           </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div id ="graphic">
+            <img src = "/static/img.png">
         </div>
       </div>
     </div>
